@@ -1,118 +1,93 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
-  ScrollView,
+  Pressable,
+  SafeAreaView,
   StatusBar,
+  StyleProp,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
+  ViewStyle,
 } from 'react-native';
+import {Currency} from './types/currency';
+import CurrencySection from './CurrencySection';
+import WebSocketController from './utils/websocket';
+import {useSelector} from 'react-redux';
+import {selectConnected} from './redux/currency';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const currenciesWebSocket = new WebSocketController();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const App = () => {
+  const connectionStaus = useSelector(selectConnected);
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const connectToWebSocket = () => {
+    const productIds = Object.values(Currency).map(currency => {
+      return `${currency}-USD`;
+    });
+    const channels = ['ticker'];
+    currenciesWebSocket.connect(productIds, channels);
+  };
+  const disconnectFromWebSocket = () => {
+    currenciesWebSocket.disconnect();
   };
 
-  /*
-   * To keep the template simple and small we're adding padding to prevent view
-   * from rendering under the System UI.
-   * For bigger apps the recommendation is to use `react-native-safe-area-context`:
-   * https://github.com/AppAndFlow/react-native-safe-area-context
-   *
-   * You can read more about it here:
-   * https://github.com/react-native-community/discussions-and-proposals/discussions/827
-   */
-  const safePadding = '5%';
+  const buttonConnectionStyle: StyleProp<ViewStyle> = {
+    backgroundColor: connectionStaus ? 'red' : 'green',
+    borderColor: connectionStaus ? 'red' : 'green',
+  };
 
   return (
-    <View style={backgroundStyle}>
+    <SafeAreaView style={styles.backgroundStyle}>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+        barStyle="dark-content"
+        backgroundColor={styles.backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        style={backgroundStyle}>
-        <View style={{paddingRight: safePadding}}>
-          <Header/>
-        </View>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            paddingHorizontal: safePadding,
-            paddingBottom: safePadding,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </View>
+      <View style={styles.header}>
+        <Text>Valor de las divisas con respecto al USD</Text>
+      </View>
+      <View style={styles.sections}>
+        {Object.values(Currency).map(currency => (
+          <CurrencySection key={currency} currency={currency} />
+        ))}
+      </View>
+      <Pressable
+        style={[styles.connectionButton, buttonConnectionStyle]}
+        onPress={
+          connectionStaus ? disconnectFromWebSocket : connectToWebSocket
+        }>
+        <Text style={styles.buttonText}>
+          {connectionStaus
+            ? 'Disconnect from WebSocket'
+            : 'Connect to WebSocket'}
+        </Text>
+      </Pressable>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  backgroundStyle: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    flex: 1,
+  },
+  header: {
+    backgroundColor: 'white',
+    padding: 16,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sections: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '100%',
   },
   sectionTitle: {
     fontSize: 24,
@@ -122,6 +97,18 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
+  },
+  connectionButton: {
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: 'white',
   },
   highlight: {
     fontWeight: '700',
