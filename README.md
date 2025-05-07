@@ -1,97 +1,89 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# React Native Cryptocurrency Price Tracker
 
-# Getting Started
+This project was created as a **mini project for React Native Engineers** to demonstrate proficiency in mobile development. The goal was to build a small application that displays live cryptocurrency prices using the public [Coinbase API](https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-prices) and WebSocket feed.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Problem Statement
 
-## Step 1: Start Metro
+The application solves the following problem:
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- Fetches and displays live prices of 6 cryptocurrencies from the Coinbase API.
+- Updates the prices in real-time when prompted by the user.
+- Provides a styled and user-friendly interface to view cryptocurrency information.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Features
 
-```sh
-# Using npm
-npm start
+### Core Features
 
-# OR using Yarn
-yarn start
-```
+1. **Fetch Cryptocurrency Data**:
 
-## Step 2: Build and run your app
+   - On application launch, the app fetches data for 6 cryptocurrencies from the Coinbase API.
+   - Displays the following details in a list:
+     - **Name**
+     - **Icon**
+     - **Price**
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+2. **Real-Time Updates**:
 
-### Android
+   - Connects to the Coinbase WebSocket price feed on user prompt (button press).
+   - Updates the cryptocurrency details in real-time as new messages are received.
 
-```sh
-# Using npm
-npm run android
+3. **Styling**:
 
-# OR using Yarn
-yarn android
-```
+   - The application is styled following design standards to ensure a clean and intuitive user experience.
 
-### iOS
+4. **Error Handling**:
+   - Considered edge cases and implemented error handling for API and WebSocket interactions.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### Bonus Features (Optional Enhancements)
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+- **Native Module Integration**:
+  - Introduced a native module to enhance the React Native project.
+- **Dynamic Background Color**:
+  - Clicking on a cryptocurrency changes the background color to match its icon.
+- **Native Features**:
+  - Added haptic feedback for user interactions.
+- **State Management**:
+  - Used Redux to persist and render cryptocurrency information.
 
-```sh
-bundle install
-```
+## Challenges and Considerations
 
-Then, and every time you update your native dependencies, run:
+During development, the following challenges and considerations were addressed:
 
-```sh
-bundle exec pod install
-```
+- **API Integration**:
+  - Ensured proper handling of API rate limits and error responses.
+- **WebSocket Management**:
+  - Managed WebSocket connections efficiently to avoid memory leaks.
+- **Design Creativity**:
+  - Styled the app to balance aesthetics and usability.
+- **Time Constraints**:
+  - Focused on delivering core functionality within the two-hour time limit.
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## How to Run the Project
 
-```sh
-# Using npm
-npm run ios
+1. Clone the repository and navigate to the project directory.
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the Metro server:
+   ```sh
+   npm start
+   ```
+4. Build and run the app:
+   - **Android**:
+     ```sh
+     npm run android
+     ```
+   - **iOS**:
+     ```sh
+     npm run ios
+     ```
 
-# OR using Yarn
-yarn ios
-```
+## Resources
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+- [Coinbase API Documentation](https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-prices)
+- [Coinbase WebSocket Overview](https://docs.cloud.coinbase.com/exchange/docs/websocket-overview)
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Notes
 
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- The project was completed within the two-hour time limit. Any unfinished features or additional enhancements are documented in the code comments.
