@@ -24,6 +24,50 @@ interface CurrencySectionProps {
   currency: Currency;
 }
 
+/**
+ * CurrencySection Component
+ *
+ * This component displays the current exchange rate for a given currency.
+ * It fetches the exchange rate from the Coinbase API and provides a pressable
+ * interface with ripple animation for refreshing the data.
+ *
+ * Props:
+ * @param {CurrencySectionProps} props - The props for the component.
+ * @param {string} props.currency - The currency code to fetch exchange rates for.
+ *
+ * State:
+ * - `actualCurrencyRate` (CurrencyRates | null): Stores the fetched exchange rate data.
+ * - `loading` (boolean): Indicates whether the data is currently being fetched.
+ * - `error` (string | null): Stores any error message encountered during fetching.
+ *
+ * Redux:
+ * - `message` (CurrencyMessage): Selected currency message from the Redux store.
+ * - `connected` (boolean): Indicates whether the app is connected to the internet.
+ *
+ * Methods:
+ * - `fetchCurrency`: Fetches the exchange rate data from the Coinbase API.
+ * - `onPress`: Triggers a refresh of the exchange rate data.
+ * - `startRippleAnimation`: Starts the ripple animation on press.
+ * - `onPressWithAnimation`: Combines the ripple animation and data refresh logic.
+ *
+ * Effects:
+ * - Fetches the exchange rate data when the component mounts or when the `currency` prop changes.
+ *
+ * UI:
+ * - Displays an error message if fetching fails.
+ * - Shows a loading indicator while fetching data.
+ * - Displays the currency symbol, name, and exchange rate when data is available.
+ * - Includes a ripple animation effect when the component is pressed.
+ *
+ * Dependencies:
+ * - React, React Native, Redux, and Animated libraries.
+ * - `CurrenciesFlags` for currency icons and colors.
+ * - `trigger` for haptic feedback.
+ *
+ * Notes:
+ * - The component uses `useCallback` to memoize the `fetchCurrency` function.
+ * - Ripple animation is implemented using React Native's `Animated` API.
+ */
 const CurrencySection: React.FC<CurrencySectionProps> = ({currency}) => {
   const [actualCurrencyRate, setActualCurrencyRate] =
     useState<CurrencyRates | null>(null);

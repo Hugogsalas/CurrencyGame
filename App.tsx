@@ -16,6 +16,30 @@ import {selectConnected} from './redux/currency';
 
 const currenciesWebSocket = new WebSocketController();
 
+/**
+ * App component serves as the main entry point for the application.
+ * It displays currency values relative to USD and provides functionality
+ * to connect or disconnect from a WebSocket for real-time updates.
+ *
+ * @component
+ *
+ * @returns {JSX.Element} The rendered App component.
+ *
+ * @remarks
+ * - Uses `useSelector` to retrieve the WebSocket connection status from the Redux store.
+ * - Dynamically generates product IDs based on available currencies.
+ * - Provides a button to toggle WebSocket connection state.
+ *
+ * @function connectToWebSocket
+ * Establishes a WebSocket connection to receive real-time currency updates.
+ * - Constructs product IDs for all currencies in the `Currency` enum.
+ * - Subscribes to the `ticker` channel for updates.
+ *
+ * @function disconnectFromWebSocket
+ * Disconnects the WebSocket connection to stop receiving updates.
+ *
+ *
+ */
 const App = () => {
   const connectionStaus = useSelector(selectConnected);
 
@@ -42,7 +66,7 @@ const App = () => {
         backgroundColor={styles.backgroundStyle.backgroundColor}
       />
       <View style={styles.header}>
-        <Text>Valor de las divisas con respecto al USD</Text>
+        <Text>Currency values relative to USD</Text>
       </View>
       <View style={styles.sections}>
         {Object.values(Currency).map(currency => (

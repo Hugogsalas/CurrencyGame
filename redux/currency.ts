@@ -19,6 +19,40 @@ export type CurrencyAction = {
   payload: OuputMessage;
 };
 
+/**
+ * @file currency.ts
+ * @description This file defines a Redux slice for managing currency-related state in the application.
+ * It includes state management for connection status and messages related to currency updates.
+ * The slice is created using Redux Toolkit's `createSlice` function.
+ *
+ * @module currencySlice
+ */
+
+/**
+ * @typedef {Object} CurrencyState
+ * @property {boolean} connected - Indicates whether the currency connection is active.
+ * @property {Partial<Record<CurrencyUSDEquivalent, CurrencyMessage>>} messages - Stores messages for each currency pair (e.g., currency-USD).
+ */
+
+/**
+ * @typedef {Object} CurrencyMessage
+ * @property {TickerMessage | undefined} ticker - The latest ticker message for the currency pair.
+ * @property {HeartbeatMessage | undefined} heartbeat - The latest heartbeat message for the currency pair.
+ */
+
+/**
+ * @typedef {Object} CurrencyAction
+ * @property {CurrencyMessagePayload} payload - The payload containing the message data.
+ */
+
+/**
+ * @description The `currencySlice` manages the state for currency-related operations.
+ * It includes the following reducers:
+ * - `connect`: Sets the `connected` state to `true`.
+ * - `disconnect`: Sets the `connected` state to `false`.
+ * - `updateTicker`: Updates the ticker or heartbeat message for a specific currency pair based on the message type.
+ *
+ */
 const currencySlice = createSlice({
   name: 'currency',
   initialState: {
